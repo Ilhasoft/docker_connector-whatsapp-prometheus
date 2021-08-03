@@ -1,7 +1,7 @@
 import groovy.json.JsonOutput
 import jenkins.plugins.rocketchatnotifier.model.MessageAttachment
 
-List<String> messagesList = new ArrayList<String>();
+List<String> messagesList=new ArrayList<String>();
 
 pipeline {
     agent {label 'general'}
@@ -18,50 +18,50 @@ pipeline {
             defaultValue: true,
             description: 'Build App'
         )
-        string(
-            name: 'GIT_URL',
-            defaultValue: 'https://github.com/Ilhasoft/docker_kukectl',
-            description: 'Git Repository URL'
-        )
-        string(
-            name: 'GIT_BRANCH',
-            defaultValue: 'main',
-            description: 'Git Repository BRANCH'
-        )
+        //string(
+        //    name: 'GIT_URL',
+        //    defaultValue: 'https://github.com/Ilhasoft/docker_kukectl',
+        //    description: 'Git Repository URL'
+        //)
+        //string(
+        //    name: 'GIT_BRANCH',
+        //    defaultValue: 'main',
+        //    description: 'Git Repository BRANCH'
+        //)
     }
 
     environment {
-        DOCKER_IMAGE_NAME = "weniai/kubectl"
+        DOCKER_IMAGE_NAME = "weniai/connector-whatsapp-prometheus"
     }
 
     stages{
-        stage('SCM') {
-            steps{
-                checkout poll: false,
-                scm:
-                    [
-                        $class: 'GitSCM',
-                        branches: [
-                            [name: "refs/heads/${params.GIT_BRANCH}"]
-                        ],
-                        doGenerateSubmoduleConfigurations: false,
-                        extensions: [[
-                            $class: 'SubmoduleOption',
-                            disableSubmodules: false,
-                            parentCredentials: true,
-                            recursiveSubmodules: false,
-                            reference: '',
-                            trackingSubmodules: false
-                        ]],
-                        //extensions: [],
-                        //submoduleCfg: [],
-                        userRemoteConfigs: [[
-                            credentialsId: "github_baltazarweni",
-                            url: "${params.GIT_URL}"
-                        ]]
-                    ]
-            }
-        }
+        //stage('SCM') {
+        //    steps{
+        //        checkout poll: false,
+        //        scm:
+        //            [
+        //                $class: 'GitSCM',
+        //                branches: [
+        //                    [name: "refs/heads/${params.GIT_BRANCH}"]
+        //                ],
+        //                doGenerateSubmoduleConfigurations: false,
+        //                extensions: [[
+        //                    $class: 'SubmoduleOption',
+        //                    disableSubmodules: false,
+        //                    parentCredentials: true,
+        //                    recursiveSubmodules: false,
+        //                    reference: '',
+        //                    trackingSubmodules: false
+        //                ]],
+        //                //extensions: [],
+        //                //submoduleCfg: [],
+        //                userRemoteConfigs: [[
+        //                    credentialsId: "github_baltazarweni",
+        //                    url: "${params.GIT_URL}"
+        //                ]]
+        //            ]
+        //    }
+        //}
         stage('Build Image') {
             when {
                 expression { params.ENABLE_BUILD }
