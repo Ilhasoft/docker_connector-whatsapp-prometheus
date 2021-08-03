@@ -43,13 +43,14 @@ def connector_whatsap():
 		raise BadRequest('Missing params.')
 
 	r=requests.get(
-		f'http://{datasource}/metrics',
+		f'https://{datasource}/metrics',
 		params={
 			'format': 'prometheus'
 		},
 		headers={
 			'Authorization': f'Apikey {apikey}'
-		}
+		},
+		verify=False
 	)
 
 	headers=dict(r.raw.headers)
