@@ -1,0 +1,8 @@
+gevent
+gunicorn[eventlet]
+python-dotenv
+
+flask
+
+requests[socks]
+
