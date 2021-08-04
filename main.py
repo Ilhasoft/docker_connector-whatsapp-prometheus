@@ -33,7 +33,7 @@ def datasource_is_valid(datasource):
 @app.route('/metrics', methods=["GET"])
 def connector_whatsap():
 	datasource=request.args.get('datasource')
-	apikey=request.args.get('apikey')
+	apikey=request.args.get('apikey').replace(' ', '+')
 	
 	if not datasource or not datasource_is_valid(datasource):
 		LOG.debug("datasource not valid")
@@ -54,12 +54,13 @@ def connector_whatsap():
 	)
 
 	headers=dict(r.raw.headers)
-	def generate():
-		for chunk in r.raw.stream(decode_content=False):
-			yield chunk
+	#def generate():
+	#	for chunk in r.raw.stream(decode_content=False):
+	#		yield chunk
 
-	out=Response(generate(), headers=headers)
-	out.status_code=r.status_code
+	#out=Response(generate(), headers=headers)
+	#out.status_code=r.status_code
+	out=Response(r.content, r.status_code, headers=headers)
 
 	return out
 
